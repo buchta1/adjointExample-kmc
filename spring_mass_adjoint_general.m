@@ -25,7 +25,7 @@ v = zeros(nt,1);
 vobs = zeros(nt,1); %this is just a placeholder for generating dummy spring data
 t = zeros(nt,1);
 insCost = zeros(nt,1);
-data=zeros(nt,4);
+
 
 %observation data generating m-k-c values
 %m(:)=1.;
@@ -80,11 +80,17 @@ ylabel('$y^\dagger$,$v^\dagger$','FontSize',20,'Interpreter','latex')
 legend('$y^\dagger$','$v^\dagger$','Interpreter','latex')
 saveas(gcf,[pwd '/data/initialComparisonAndAdjoint.png'])
 
+data=zeros(nt,3);
 data(:,1)=t(:);
 data(:,2)=y(:);
 data(:,3)=yobs(:);
-data(:,4)=yadj(:);
-%csvwrite('/Users/davidbuchta/Downloads/springAdjoint',data);
+csvwrite([pwd '/data/YObsVersusInitial.csv'],data);
+
+data=zeros(nt,3);
+data(:,1)=t(:);
+data(:,2)=yadj(:);
+data(:,3)=vadj(:);
+csvwrite([pwd '/data/InitialAdjointField.csv'],data);
 
 %compute the sensitivity
 [d2ydt2] = getSecondDerivative(y,nt,dt);
@@ -124,6 +130,7 @@ xlabel('$\alpha$','FontSize',20,'Interpreter','latex')
 ylabel('$\mathcal{E}/||\mathcal{G}||$','FontSize',20,'Interpreter','latex')
 legend('error')
 saveas(gcf,[pwd '/data/adjointError.png'])
+csvwrite([pwd '/data/InitialAdjointError.csv'],err);
 
 
 %Use optimize function
@@ -150,6 +157,12 @@ ylabel('$y$','FontSize',20,'Interpreter','latex')
 legend('observation','initial guess','optimized')
 saveas(gcf,[pwd '/data/firstVersusOptimized.png'])
 
+data=zeros(nt,4);
+data(:,1)=t(:);
+data(:,2)=yobs(:);
+data(:,3)=oldy(:);
+data(:,4)=newy(:);
+csvwrite([pwd '/data/firstVersusOptimized.csv'],data);
 
 figure(4)
 subplot(3,1,1);
@@ -161,6 +174,12 @@ xlabel('$t$','FontSize',20,'Interpreter','latex')
 ylabel('mass','FontSize',20,'Interpreter','latex')
 legend('$m_\mathrm{opt}$','unknown $m$','Interpreter','latex')
 
+data=zeros(nt,3);
+data(:,1)=t(:);
+data(:,2)=mnew(:);
+data(:,3)=m(:);
+csvwrite([pwd '/data/mVersusUnknown.csv'],data);
+
 subplot(3,1,2);
 plot(t,knew,t,k,'o')
 ax = gca;
@@ -169,6 +188,12 @@ ylim([0 3.])
 xlabel('$t$','FontSize',20,'Interpreter','latex')
 ylabel('spring constant','FontSize',20,'Interpreter','latex')
 legend('$k_\mathrm{opt}$','unknown $k$','Interpreter','latex')
+
+data=zeros(nt,3);
+data(:,1)=t(:);
+data(:,2)=knew(:);
+data(:,3)=k(:);
+csvwrite([pwd '/data/kVersusUnknown.csv'],data);
 
 subplot(3,1,3);
 plot(t,cnew,t,c,'o')
@@ -180,6 +205,12 @@ ylabel('damper','FontSize',20,'Interpreter','latex')
 legend('$c_\mathrm{opt}$','unknown $c$','Interpreter','latex')
 set(gcf,'Position',[10 10 750 900])
 saveas(gcf,[pwd '/data/k-m-cVersusUnknown.png'])
+
+data=zeros(nt,3);
+data(:,1)=t(:);
+data(:,2)=cnew(:);
+data(:,3)=c(:);
+csvwrite([pwd '/data/cVersusUnknown.csv'],data);
 
 %naive steepest descent 
 %todo: improve the optimizer (Brent's line minimization; conjugate gradients, etc) 
@@ -216,7 +247,7 @@ end
 
 %save intermediate optimizations for plotting
 if n==1 
- yDuringOpt(:,2)=y(:);, 
+ yDuringOpt(:,2)=y(:);
 end
 if n==10 
  yDuringOpt(:,3)=y(:);
@@ -275,6 +306,7 @@ ax.FontSize = 20;
 xlabel('$i$ iteration','FontSize',20,'Interpreter','latex')
 ylabel('Normalized Cost & Gradient','FontSize',20,'Interpreter','latex')
 saveas(gcf,[pwd '/data/CostDuringOpt.png'])
+csvwrite([pwd '/data/CostDuringOpt.csv'],CostDuringOpt);
 
 figure(8)
 plot(yDuringOpt(:,1),yobs(:),'o',...
@@ -297,6 +329,7 @@ legend('$y_\mathrm{obs}$',...
        '$y_{i=1000}$',...
        'Interpreter','latex')
 saveas(gcf,[pwd '/data/YDuringOpt.png'])
+csvwrite([pwd '/data/YDuringOpt.csv'],yDuringOpt);
 
 end
 
