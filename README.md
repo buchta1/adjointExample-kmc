@@ -1,6 +1,8 @@
 # adjointExample-kmc
 matlab code which solves the adjoint equations for spring mass damper with generic time dependent mass, spring, damper
 
+#improvements to code performance and readbility are underway (written in haste to demo adjoint-based sensitivity)
+
 executing the matlab code will generate 
 1) Observational data v. initial guess and its adjoint solution
 2) Adjoint Error versus stepsize (alpha) compared to finite different approximations
