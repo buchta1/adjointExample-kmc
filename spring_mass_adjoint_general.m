@@ -1,4 +1,6 @@
 %%%%%%%%%%%%%%spring-mass-damper
+%addpath('/Users/davidbuchta/Dropbox/PhysicsTeacher/adjointExample-kmc')
+%pwd='/Users/davidbuchta/Dropbox/PhysicsTeacher/adjointExample-kmc'
 clear all;
 close all;
 folderForPics='data'
@@ -147,7 +149,7 @@ oldv=vobs(1);
 [success,oldv,oldy] = getForward(oldv,oldy,ki,mi,ci,nt,dt);
 [success,newv,newy] = getForward(newv,newy,knew,mnew,cnew,nt,dt);
 figure(3)
-p=plot(t,yobs,'o',t,oldy,'-',t,newy)
+p=plot(t,yobs,'o',t,oldy,'-',t,newy);
 p(2).LineWidth = 1;
 p(3).LineWidth = 3;
 ax = gca;
@@ -164,7 +166,7 @@ data(:,3)=oldy(:);
 data(:,4)=newy(:);
 csvwrite([pwd '/data/firstVersusOptimized.csv'],data);
 
-figure(4)
+figure(10)
 subplot(3,1,1);
 plot(t,mnew,t,m,'o')
 ax = gca;
@@ -304,7 +306,7 @@ legend('$\mathcal{J}_i/\mathcal{J}_o$','$||\mathcal{G}_i||/||\mathcal{G}_o||$','
 ax = gca;
 ax.FontSize = 20; 
 xlabel('$i$ iteration','FontSize',20,'Interpreter','latex')
-ylabel('Normalized Cost & Gradient','FontSize',20,'Interpreter','latex')
+ylabel('Normalized Cost \& Gradient','FontSize',20,'Interpreter','latex')
 saveas(gcf,[pwd '/data/CostDuringOpt.png'])
 csvwrite([pwd '/data/CostDuringOpt.csv'],CostDuringOpt);
 
