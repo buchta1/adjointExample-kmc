@@ -1,9 +1,7 @@
 # Automatically find spring-mass-damper behavior to match observations using adjoint-based sensitivity: Part I Linear system
 matlab code which solves the adjoint equations for spring mass damper with generic time dependent mass, spring, damper
 
-#improvements to code performance and readbility are underway (written in haste to demo adjoint-based sensitivity)
-
-executing the matlab code will generate 
+Executing the matlab code will generate 
 1) Observational data v. initial guess and its adjoint solution
 2) Adjoint Error versus stepsize (alpha) compared to finite different approximations
 3) Cost during optimization
