@@ -1,4 +1,4 @@
-# adjointExample-kmc
+# Automatically find spring-mass-damper behavior to match observations using adjoint-based sensitivity: Part {I} Linear system
 matlab code which solves the adjoint equations for spring mass damper with generic time dependent mass, spring, damper
 
 #improvements to code performance and readbility are underway (written in haste to demo adjoint-based sensitivity)
